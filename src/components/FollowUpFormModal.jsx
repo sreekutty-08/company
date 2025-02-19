@@ -4,58 +4,117 @@ import {
   DialogActions,
   DialogContent,
   DialogTitle,
+  TextareaAutosize,
+  Button,
+  IconButton,
+  Typography,
 } from "@mui/material";
-import { Button } from "@mui/material";
-import { TextareaAutosize } from "@mui/material";
-import { X } from "lucide-react"; // Close icon
+import { X } from "lucide-react";
 import { useDispatch, useSelector } from "react-redux";
 import { setFollowupModalOff } from "../redux/view/viewSlice";
 import { addFollowUp } from "../redux/view/viewThunk";
 
 const FollowUpFormModal = ({ company_id }) => {
   const [message, setMessage] = useState("");
+  const dispatch = useDispatch();
   const { followupModal } = useSelector((state) => state.view);
+
   const handleSubmit = (e) => {
     e.preventDefault();
-    dispatch(addFollowUp({ company_id: 1, data: { message: message } }));
-
+    if (!message.trim()) return;
+    dispatch(addFollowUp({ company_id, data: { message } }));
     dispatch(setFollowupModalOff());
   };
-  const dispatch = useDispatch();
+
   return (
     <Dialog
       open={followupModal}
       onClose={() => dispatch(setFollowupModalOff())}
-      className="max-w-lg mx-auto"
+      maxWidth="sm"
+      fullWidth
+      sx={{
+        "& .MuiPaper-root": {
+          borderRadius: "12px",
+          padding: "24px",
+          boxShadow: "0px 6px 14px rgba(0, 0, 0, 0.15)",
+        },
+      }}
     >
-      <DialogTitle className="flex items-center justify-between">
-        Follow Up Message
-        <button
+      {/* Header */}
+      <DialogTitle
+        sx={{
+          display: "flex",
+          alignItems: "center",
+          justifyContent: "space-between",
+          fontWeight: "bold",
+          fontSize: "1.2rem",
+          borderBottom: "1px solid #ddd",
+          paddingBottom: "10px",
+        }}
+      >
+        <Typography variant="h6" className="text-gray-800 font-semibold">
+          Follow-Up Message
+        </Typography>
+        <IconButton
           onClick={() => dispatch(setFollowupModalOff())}
-          className="text-gray-500 hover:text-gray-800 focus:outline-none"
+          sx={{
+            color: "#666",
+            transition: "color 0.2s ease-in-out",
+            "&:hover": { color: "#000" },
+          }}
         >
           <X size={24} />
-        </button>
+        </IconButton>
       </DialogTitle>
-      <DialogContent>
-        <form onSubmit={handleSubmit}>
+
+      {/* Form */}
+      <DialogContent className="mt-3">
+        <form onSubmit={handleSubmit} className="space-y-5">
           <TextareaAutosize
             value={message}
             onChange={(e) => setMessage(e.target.value)}
-            placeholder="Enter your follow-up message here..."
+            placeholder="Enter your follow-up message..."
             minRows={5}
-            className="w-full p-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+            style={{
+              width: "100%",
+              padding: "14px",
+              borderRadius: "10px",
+              border: "1px solid #ccc",
+              fontSize: "1rem",
+              backgroundColor: "#f9f9f9",
+              transition: "border-color 0.2s ease-in-out",
+            }}
+            onFocus={(e) => (e.target.style.borderColor = "#007bff")}
+            onBlur={(e) => (e.target.style.borderColor = "#ccc")}
           />
-          <DialogActions className="flex justify-end mt-4">
+
+          {/* Buttons */}
+          <DialogActions sx={{ justifyContent: "flex-end", gap: "12px" }}>
             <Button
               onClick={() => dispatch(setFollowupModalOff())}
-              className="mr-2 text-gray-700 bg-gray-200 hover:bg-gray-300"
+              sx={{
+                backgroundColor: "#f5f5f5",
+                color: "#555",
+                borderRadius: "8px",
+                padding: "8px 16px",
+                "&:hover": { backgroundColor: "#e0e0e0" },
+              }}
             >
               Cancel
             </Button>
             <Button
               type="submit"
-              className="bg-blue-600 text-white hover:bg-blue-700"
+              disabled={!message.trim()}
+              sx={{
+                backgroundColor: message.trim() ? "#007bff" : "#ccc",
+                color: "#fff",
+                borderRadius: "8px",
+                padding: "8px 16px",
+                transition: "background-color 0.2s ease-in-out",
+                "&:hover": {
+                  backgroundColor: message.trim() ? "#0056b3" : "#ccc",
+                },
+              }}
             >
               Submit
             </Button>
