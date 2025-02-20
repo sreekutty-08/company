@@ -36,7 +36,22 @@ export const addFollowUp = createAsyncThunk(
       return response.data;
     } catch (error) {
         console.log(error);
-        
+      return rejectWithValue(error.response.data);
+    }
+  }
+);
+
+export const editFollowUp = createAsyncThunk(
+  "customers/editFollowUp",
+  async ({followUpId, data}, { rejectWithValue }) => {
+    try {
+      const response = await axiosInstance.patch(
+        `api/followup/${followUpId}`,
+        data
+      );
+      return response.data;
+    } catch (error) {
+        console.log(error);
       return rejectWithValue(error.response.data);
     }
   }
@@ -52,8 +67,7 @@ export const addSwitchIP = createAsyncThunk(
         );
         return response.data;
       } catch (error) {
-          console.log(error);
-          
+          console.log(error);  
         return rejectWithValue(error.response.data);
       }
     }

@@ -1,5 +1,5 @@
 import React, { useEffect } from "react";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { useParams } from "react-router-dom";
 import {
   fetchFollowUps,
@@ -21,12 +21,13 @@ import FollowUpFormModal from "../components/FollowUpFormModal";
 const ViewPage = () => {
   const { company_id } = useParams();
   const dispatch = useDispatch();
+  const {reRender} = useSelector(state => state.view)
 
   useEffect(() => {
     dispatch(fetchSwitchIPDetails(company_id));
     dispatch(fetchCustomerDetail(company_id));
     dispatch(fetchFollowUps(company_id));
-  }, [company_id]);
+  }, [company_id, reRender]);
 
   return (
     <div className="container mx-auto p-6">
@@ -62,7 +63,7 @@ const ViewPage = () => {
           >
             Add Follow-up
           </button>
-          <FollowUpFormModal />
+          <FollowUpFormModal company_id={company_id} />
         </div>
 
       </div>

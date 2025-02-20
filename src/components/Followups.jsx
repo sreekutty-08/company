@@ -1,10 +1,13 @@
 import React from "react";
 import { Card, CardContent, Typography, Paper, Avatar } from "@mui/material";
-import { useSelector } from "react-redux";
-import { FiMessageCircle } from "react-icons/fi";
+import { useDispatch, useSelector } from "react-redux";
+import { FiMessageCircle, FiPenTool } from "react-icons/fi";
+import {setFollowupModalOn, setIsEditingOn, setSelectedFollowUp} from "../redux/view/viewSlice"
 
 const Followups = () => {
   const { followUps } = useSelector((state) => state.view);
+
+  const dispatch = useDispatch()
 
   if (!followUps || followUps.length === 0) {
     return (
@@ -45,9 +48,17 @@ const Followups = () => {
                 <Typography className="font-semibold text-gray-900">
                   {followup.user || "Unknown User"}
                 </Typography>
-                <Typography className="text-gray-700 text-sm">{followup.message}</Typography>
+                <Typography className="text-gray-700 text-sm flex">
+                  {followup.message}
+                  <FiPenTool className="text-blue-600 mr-2" onClick={() => {
+                    dispatch(setSelectedFollowUp(followup))
+                    dispatch(setIsEditingOn())
+                    dispatch(setFollowupModalOn())
+                    
+                  }}/> 
+                </Typography>
                 <Typography className="text-xs text-gray-500 mt-1">
-                  {new Date(followup.date).toLocaleString()}
+                  {new Date(followup.date).toLocaleString()} 
                 </Typography>
               </div>
             </CardContent>
