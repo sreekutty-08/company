@@ -30,6 +30,12 @@ const customerTableSlice = createSlice({
     setCustomerModalOff: (state) => {
       state.customerModal = false;
     },
+    removeSelectedFilters: (state) => {
+      state.selectedStatus = "";
+      state.selectedPriority = "";
+      state.selectedUserType = "";
+      state.selectedTechDetails = "";
+    },
   },
   extraReducers: (builder) => {
     builder.addCase(fetchCustomerDetails.fulfilled, (state, action) => {
@@ -45,5 +51,6 @@ export const {
   setSelectedUserType,
   setCustomerModalOn,
   setCustomerModalOff,
+  removeSelectedFilters,
 } = customerTableSlice.actions;
 export default customerTableSlice.reducer;

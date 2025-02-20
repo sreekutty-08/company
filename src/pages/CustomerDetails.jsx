@@ -2,31 +2,35 @@ import React, { useEffect, useState } from "react";
 import CustomerTable from "../components/CustomerTable";
 import FilterBy from "../components/FilterBy";
 import { Typography, Box, Button, Paper, Grid2 } from "@mui/material";
-import { UserCircle } from "lucide-react";
+import { UserCircle, XCircle } from "lucide-react";
 import { useDispatch, useSelector } from "react-redux";
-import { 
-  setCustomerModalOff, 
-  setCustomerModalOn, 
-  setSelectedPriority, 
-  setSelectedStatus, 
-  setSelectedTechDetails, 
-  setSelectedUserType 
+import {
+  removeSelectedFilters,
+  setCustomerModalOff,
+  setCustomerModalOn,
+  setSelectedPriority,
+  setSelectedStatus,
+  setSelectedTechDetails,
+  setSelectedUserType,
 } from "../redux/customerTable/customerTableSlice";
-import { addCustomer, fetchCustomerDetails } from "../redux/customerTable/customerTableThunk";
+import {
+  addCustomer,
+  fetchCustomerDetails,
+} from "../redux/customerTable/customerTableThunk";
 import AddCustomerModal from "../components/AddCustomerModal";
 import SearchComponent from "../components/SearchComponent";
 
 const CustomerDetails = () => {
   const dispatch = useDispatch();
-  const {reRender} = useSelector(state => state.view)
-  const { 
-    selectedStatus, 
-    selectedPriority, 
-    selectedUserType, 
-    selectedTechDetails, 
-    customerData, 
-    customerModal 
-  } = useSelector(state => state.customers);
+  const { reRender } = useSelector((state) => state.view);
+  const {
+    selectedStatus,
+    selectedPriority,
+    selectedUserType,
+    selectedTechDetails,
+    customerData,
+    customerModal,
+  } = useSelector((state) => state.customers);
 
   const [filteredData, setFilteredData] = useState(customerData);
 
@@ -40,21 +44,48 @@ const CustomerDetails = () => {
         (!selectedStatus || customer.status === selectedStatus) &&
         (!selectedPriority || customer.priority === selectedPriority) &&
         (!selectedUserType || customer.user_type === selectedUserType) &&
-        (!selectedTechDetails || customer.technical_details === selectedTechDetails)
+        (!selectedTechDetails ||
+          customer.technical_details === selectedTechDetails)
       );
     });
     setFilteredData(filtered);
-  }, [selectedStatus, selectedPriority, selectedUserType, selectedTechDetails, customerData]);
+  }, [
+    selectedStatus,
+    selectedPriority,
+    selectedUserType,
+    selectedTechDetails,
+    customerData,
+  ]);
 
   const onPriorityChange = (val) => dispatch(setSelectedPriority(val));
   const onStatusChange = (val) => dispatch(setSelectedStatus(val));
   const onUserTypeChange = (val) => dispatch(setSelectedUserType(val));
-  const onTechnicalStatusChange = (val) => dispatch(setSelectedTechDetails(val));
+  const onTechnicalStatusChange = (val) =>
+    dispatch(setSelectedTechDetails(val));
 
-  const PRIORITIES = [{ label: "High", value: "High" }, { label: "Medium", value: "Medium" }, { label: "Low", value: "Low" }];
-  const STATUS = [{ label: "Active", value: "Active" }, { label: "Inactive", value: "Inactive" }, { label: "Junk", value: "Junk" }, { label: "Spam", value: "Spam" }, { label: "Hot", value: "Hot" }, { label: "New", value: "New" }];
-  const TECHDETAILS = [{ label: "Pending", value: "Pending" }, { label: "Test Passed", value: "Test Passed" }, { label: "Test Fail", value: "Test Fail" }, { label: "Test Initiated", value: "Test Initiated" }];
-  const USERTYPE = [{ label: "Client", value: "Client" }, { label: "Vendor", value: "Vendor" }];
+  const PRIORITIES = [
+    { label: "High", value: "High" },
+    { label: "Medium", value: "Medium" },
+    { label: "Low", value: "Low" },
+  ];
+  const STATUS = [
+    { label: "Active", value: "Active" },
+    { label: "Inactive", value: "Inactive" },
+    { label: "Junk", value: "Junk" },
+    { label: "Spam", value: "Spam" },
+    { label: "Hot", value: "Hot" },
+    { label: "New", value: "New" },
+  ];
+  const TECHDETAILS = [
+    { label: "Pending", value: "Pending" },
+    { label: "Test Passed", value: "Test Passed" },
+    { label: "Test Fail", value: "Test Fail" },
+    { label: "Test Initiated", value: "Test Initiated" },
+  ];
+  const USERTYPE = [
+    { label: "Client", value: "Client" },
+    { label: "Vendor", value: "Vendor" },
+  ];
 
   return (
     <Box
@@ -77,7 +108,7 @@ const CustomerDetails = () => {
           padding: "24px",
           marginBottom: "24px",
           boxShadow: "0 4px 15px rgba(0,0,0,0.1)",
-          borderRadius: "0px",  // Squared corners
+          borderRadius: "0px", // Squared corners
         }}
       >
         {/* Heading with Icon */}
@@ -145,6 +176,19 @@ const CustomerDetails = () => {
                 placeholder="Select"
               />
             </Grid2>
+
+            {/* Remove Filter Button */}
+            <Grid2 item xs={12} sm={6} md={2}>
+              <Button
+                onClick={() => dispatch(removeSelectedFilters())}
+                fullWidth
+                variant="contained"
+                className="flex! items-center! justify-center! gap-2! rounded-lg! bg-orange-500! px-4! py-3! text-white! font-semibold! text-base! shadow-md! transition-all! duration-200! hover:bg-orange-600! hover:scale-105! active:scale-95!"
+              >
+                <XCircle className="w-5 h-5" />
+                Remove Filters
+              </Button>
+            </Grid2>
             <Grid2 item xs={12} sm={6} md={2.5}>
               <SearchComponent />
             </Grid2>
@@ -184,16 +228,16 @@ const CustomerDetails = () => {
           backgroundColor: "#fff",
           padding: "28px",
           boxShadow: "0 4px 15px rgba(0,0,0,0.1)",
-          borderRadius: "0px",  // Squared corners
+          borderRadius: "0px", // Squared corners
         }}
       >
         {/* Table */}
         <CustomerTable customerData={filteredData} />
 
         {/* Add Customer Modal */}
-        <AddCustomerModal 
-          open={customerModal} 
-          handleClose={() => dispatch(setCustomerModalOff())} 
+        <AddCustomerModal
+          open={customerModal}
+          handleClose={() => dispatch(setCustomerModalOff())}
           onSubmit={(data) => dispatch(addCustomer(data))}
         />
       </Paper>
