@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import {
   Dialog,
   DialogActions,
@@ -12,17 +12,36 @@ import {
 import { X } from "lucide-react";
 import { useDispatch, useSelector } from "react-redux";
 import { setFollowupModalOff } from "../redux/view/viewSlice";
-import { addFollowUp } from "../redux/view/viewThunk";
+import { addFollowUp, editFollowUp } from "../redux/view/viewThunk";
 
 const FollowUpFormModal = ({ company_id }) => {
   const [message, setMessage] = useState("");
   const dispatch = useDispatch();
-  const { followupModal } = useSelector((state) => state.view);
+  const { followupModal, selectedFollowUp, isEditing } = useSelector(
+    (state) => state.view
+  );
+
+  useEffect(() => {
+    if (isEditing && selectedFollowUp) {
+      setMessage(selectedFollowUp.message);
+    } else {
+      setMessage("");
+    }
+  }, [isEditing, selectedFollowUp]);
 
   const handleSubmit = (e) => {
     e.preventDefault();
     if (!message.trim()) return;
-    dispatch(addFollowUp({ company_id, data: { message } }));
+    if (isEditing) {
+      dispatch(
+        editFollowUp({
+          followUpId: selectedFollowUp.id,
+          data: { message: message },
+        })
+      );
+    } else {
+      dispatch(addFollowUp({ company_id, data: { message: message } }));
+    }
     dispatch(setFollowupModalOff());
   };
 

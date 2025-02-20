@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import CustomerTable from "../components/CustomerTable";
 import FilterBy from "../components/FilterBy";
-import { Typography, Box, Button, Paper, Grid } from "@mui/material";
+import { Typography, Box, Button, Paper, Grid2 } from "@mui/material";
 import { UserCircle } from "lucide-react";
 import { useDispatch, useSelector } from "react-redux";
 import { 
@@ -14,10 +14,11 @@ import {
 } from "../redux/customerTable/customerTableSlice";
 import { addCustomer, fetchCustomerDetails } from "../redux/customerTable/customerTableThunk";
 import AddCustomerModal from "../components/AddCustomerModal";
+import SearchComponent from "../components/SearchComponent";
 
 const CustomerDetails = () => {
   const dispatch = useDispatch();
-
+  const {reRender} = useSelector(state => state.view)
   const { 
     selectedStatus, 
     selectedPriority, 
@@ -27,11 +28,11 @@ const CustomerDetails = () => {
     customerModal 
   } = useSelector(state => state.customers);
 
-  const [filteredData, setFilteredData] = useState([]);
+  const [filteredData, setFilteredData] = useState(customerData);
 
   useEffect(() => {
     dispatch(fetchCustomerDetails()).unwrap();
-  }, [dispatch]);
+  }, [reRender]);
 
   useEffect(() => {
     const filtered = customerData.filter((customer) => {
@@ -107,8 +108,8 @@ const CustomerDetails = () => {
             boxShadow: "0px 4px 10px rgba(0, 0, 0, 0.08)",
           }}
         >
-          <Grid container spacing={2} alignItems="center" sx={{ flexGrow: 1 }}>
-            <Grid item xs={12} sm={6} md={2.5}>
+          <Grid2 container spacing={2} alignItems="center" sx={{ flexGrow: 1 }}>
+            <Grid2 item xs={12} sm={6} md={2.5}>
               <FilterBy
                 options={PRIORITIES}
                 value={selectedPriority}
@@ -116,8 +117,8 @@ const CustomerDetails = () => {
                 label="Priority"
                 placeholder="Select"
               />
-            </Grid>
-            <Grid item xs={12} sm={6} md={2.5}>
+            </Grid2>
+            <Grid2 item xs={12} sm={6} md={2.5}>
               <FilterBy
                 options={STATUS}
                 value={selectedStatus}
@@ -125,8 +126,8 @@ const CustomerDetails = () => {
                 label="Status"
                 placeholder="Select"
               />
-            </Grid>
-            <Grid item xs={12} sm={6} md={2.5}>
+            </Grid2>
+            <Grid2 item xs={12} sm={6} md={2.5}>
               <FilterBy
                 options={USERTYPE}
                 value={selectedUserType}
@@ -134,8 +135,8 @@ const CustomerDetails = () => {
                 label="User Type"
                 placeholder="Select"
               />
-            </Grid>
-            <Grid item xs={12} sm={6} md={2.5}>
+            </Grid2>
+            <Grid2 item xs={12} sm={6} md={2.5}>
               <FilterBy
                 options={TECHDETAILS}
                 value={selectedTechDetails}
@@ -143,9 +144,13 @@ const CustomerDetails = () => {
                 label="Tech Status"
                 placeholder="Select"
               />
-            </Grid>
+            </Grid2>
+            <Grid2 item xs={12} sm={6} md={2.5}>
+              <SearchComponent />
+            </Grid2>
+
             {/* Add Customer Button */}
-            <Grid item xs={12} sm={6} md={2}>
+            <Grid2 item xs={12} sm={6} md={2}>
               <Button
                 fullWidth
                 onClick={() => dispatch(setCustomerModalOn())}
@@ -165,8 +170,8 @@ const CustomerDetails = () => {
               >
                 + Add Customer
               </Button>
-            </Grid>
-          </Grid>
+            </Grid2>
+          </Grid2>
         </Box>
       </Paper>
 
