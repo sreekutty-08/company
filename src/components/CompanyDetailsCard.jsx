@@ -49,7 +49,7 @@ const CompanyDetailsCard = () => {
               </TableRow>
             </TableHead>
             <TableBody>
-              {details.map((item, index) => (
+              {details?.map((item, index) => (
                 <TableRow
                   key={index}
                   className={`transition-all ${index % 2 === 0 ? "bg-gray-100" : "bg-white"} hover:bg-blue-50`}

@@ -39,7 +39,7 @@ console.log(switchIPData);
               </TableRow>
             </TableHead>
             <TableBody>
-              {switchIPData.map((row, index) => (
+              {switchIPData?.map((row, index) => (
                 <TableRow
                   key={row.id}
                   className={`transition-all ${
