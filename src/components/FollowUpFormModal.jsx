@@ -23,9 +23,7 @@ const FollowUpFormModal = ({ company_id }) => {
 
   useEffect(() => {
     if (isEditing && selectedFollowUp) {
-      setMessage(selectedFollowUp.followupDescription);
-      console.log(selectedFollowUp);
-      
+      setMessage(selectedFollowUp.followupDescription);      
     } else {
       setMessage("");
     }

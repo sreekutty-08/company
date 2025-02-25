@@ -50,7 +50,6 @@ const AddCustomerModal = ({ open, handleClose, onSubmit }) => {
   });
 
   const handleFormSubmit = (data) => {
-    console.log("Form Data Submitted:", data);
     onSubmit(data);
     handleClose()
   };

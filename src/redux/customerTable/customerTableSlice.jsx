@@ -38,9 +38,7 @@ const customerTableSlice = createSlice({
       state.selectedTechDetails = "";
     },
     setSearch: (state, action) => {
-      state.search = action.payload;
-      console.log(action.payload);
-      
+      state.search = action.payload;      
     },
   },
   extraReducers: (builder) => {

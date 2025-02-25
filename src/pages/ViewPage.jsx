@@ -1,73 +1,92 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useParams } from "react-router-dom";
-import {
-  fetchFollowUps,
-  fetchSwitchIPDetails,
-} from "../redux/view/viewThunk";
+import { fetchFollowUps, fetchSwitchIPDetails } from "../redux/view/viewThunk";
 import { fetchCustomerDetail } from "../redux/customerTable/customerTableThunk";
-import { 
-  setFollowupModalOn, 
-  setSwitchIPModalOn, 
-  setSwitchIPModalOff 
-} from "../redux/view/viewSlice";
 
-import SwitchIPTable from "../components/SwitchIPTable";
-import SwitchIpFormModal from "../components/SwitchIpFormModal";
 import CompanyDetailsCard from "../components/CompanyDetailsCard";
 import Followups from "../components/Followups";
-import FollowUpFormModal from "../components/FollowUpFormModal";
+import { Tab, Box, Paper, Container } from "@mui/material";
+import BusinessIcon from "@mui/icons-material/Business";
+import AssignmentIcon from "@mui/icons-material/Assignment";
 
 const ViewPage = () => {
   const { company_id } = useParams();
   const dispatch = useDispatch();
-  const {reRender} = useSelector(state => state.view)
+  const { reRender } = useSelector((state) => state.view);
+
+  // State to control tab selection
+  const [activeTab, setActiveTab] = useState(0);
 
   useEffect(() => {
-    dispatch(fetchSwitchIPDetails(company_id));
     dispatch(fetchCustomerDetail(company_id));
+    dispatch(fetchSwitchIPDetails(company_id));
     dispatch(fetchFollowUps(company_id));
+
   }, [company_id, reRender]);
 
   return (
-    <div className="container mx-auto p-6">
-      {/* Layout Grid */}
-      <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-        
-        {/* Left Panel - Switch IP Section */}
-        <div className="flex flex-col items-center space-y-4">
-          <SwitchIPTable />
-          <button
-            onClick={() => dispatch(setSwitchIPModalOn())}
-            className="bg-blue-500 hover:bg-blue-600 text-white px-4 py-2 rounded-md shadow-md transition"
-          >
-            Add IP
-          </button>
-          <SwitchIpFormModal
-            closeModal={() => dispatch(setSwitchIPModalOff())}
-            company_id={company_id}
+    <Container maxWidth="xl" sx={{ mt: 4 }}>
+      {/* Split Tabs Section */}
+      <Paper elevation={3} className="rounded-lg overflow-hidden">
+        <Box sx={{ display: "flex", justifyContent: "center", alignItems: "center", backgroundColor: "#fff" }}>
+          <Tab
+            icon={<BusinessIcon />}
+            iconPosition="start"
+            label="Company Details"
+            sx={{
+              width: "50%",
+              fontWeight: "bold",
+              color: "#000",
+              textTransform: "none",
+              backgroundColor: activeTab === 0 ? "#f5f5f5" : "#fff",
+              borderRight: "2px solid #ddd",
+              transition: "0.3s",
+            }}
+            onClick={() => setActiveTab(0)}
           />
-        </div>
+          <Tab
+            icon={<AssignmentIcon />}
+            iconPosition="start"
+            label="Follow-ups"
+            sx={{
+              width: "50%",
+              fontWeight: "bold",
+              color: "#000",
+              textTransform: "none",
+              backgroundColor: activeTab === 1 ? "#f5f5f5" : "#fff",
+              transition: "0.3s",
+            }}
+            onClick={() => setActiveTab(1)}
+          />
+        </Box>
+      </Paper>
 
-        {/* Center Panel - Company Details */}
-        <div className="flex justify-center">
-          <CompanyDetailsCard />
-        </div>
+      {/* Company Details Section */}
+      {activeTab === 0 && (
+        <Box sx={{ mt: 6 }}>
+          <CompanyDetailsCard company_id={company_id} />
+        </Box>
+      )}
 
-        {/* Right Panel - Follow Ups */}
-        <div className="flex flex-col items-center space-y-4">
-          <Followups />
-          <button
-            onClick={() => dispatch(setFollowupModalOn())}
-            className="bg-green-500 hover:bg-green-600 text-white px-4 py-2 rounded-md shadow-md transition"
+      {/* Follow-ups Section (Increased Width) */}
+      {activeTab === 1 && (
+        <Box sx={{ mt: 6, display: "flex", flexDirection: "column", alignItems: "center" }}>
+          <Paper
+            elevation={3}
+            sx={{
+              width: "90%", // Increased width to cover more space
+              maxWidth: "1200px", // Ensures responsiveness
+              padding: "24px",
+              borderRadius: "12px",
+              boxShadow: "0px 4px 10px rgba(0,0,0,0.1)",
+            }}
           >
-            Add Follow-up
-          </button>
-          <FollowUpFormModal company_id={company_id} />
-        </div>
-
-      </div>
-    </div>
+            <Followups company_id={company_id} />
+          </Paper>
+        </Box>
+      )}
+    </Container>
   );
 };
 

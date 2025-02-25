@@ -20,7 +20,6 @@ export default function LoginPage() {
 
       // ✅ Store the token
       sessionStorage.setItem("token", response.data.token);
-      console.log("Token:", response.data.token);
 
       // ✅ Show success toast
       toast.success("Successfully logged in!");

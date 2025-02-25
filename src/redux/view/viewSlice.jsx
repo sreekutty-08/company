@@ -42,13 +42,13 @@ const viewSlice = createSlice({
   extraReducers: (builder) => {
     builder
       .addCase(fetchSwitchIPDetails.fulfilled, (state, action) => {
-        state.switchIPData = action.payload;
+        state.switchIPData = action.payload;        
       })
       .addCase(fetchCustomerDetail.fulfilled, (state, action) => {
         state.company = action.payload;
       })
       .addCase(fetchFollowUps.fulfilled, (state, action) => {
-        state.followUps = action.payload;
+        state.followUps = action.payload;        
       })
       .addCase(editFollowUp.fulfilled, (state) => {
         state.reRender = !state.reRender;

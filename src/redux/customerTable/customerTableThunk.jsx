@@ -4,7 +4,7 @@ import axiosInstance from "../../axios/axiosConfiguration"
 export const fetchCustomerDetails = createAsyncThunk(
     "customers/fetchCustomerDetails",
     async ( _, {rejectWithValue}) => {
-        try {
+        try {            
             const response = await axiosInstance.get("api/customers")
             return response.data.customer
         } catch (error) {

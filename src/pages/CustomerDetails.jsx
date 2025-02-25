@@ -47,7 +47,7 @@ const CustomerDetails = () => {
         (!selectedPriority || customer.priority === selectedPriority) &&
         (!selectedUserType || customer.user_type === selectedUserType) &&
         (!selectedTechDetails || customer.technical_details === selectedTechDetails) &&
-        (!search || customer.companyName.toLowerCase().includes(search.toLowerCase()))
+        (!search || customer.companyName.toLowerCase().includes(search.toLowerCase()))  
       );
     });
     setFilteredData(filtered);

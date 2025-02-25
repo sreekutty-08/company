@@ -19,7 +19,6 @@ const CustomerTable = ({ customerData }) => {
   const filteredData = customerData.filter(customer => customer.userEmail !== "amal@gmail.com");
 
   const handleView = (id) => {
-    console.log("View: ", id);
     navigate(`/view/${id}`);
   };
 
