@@ -13,9 +13,6 @@ const FollowUpTab = ({ company_id }) => {
     customerId: company_id,
     companyId: '',
     followupDescription: '',
-    followupMethod: "call",
-    followupStatus: "pending",
-    followupCategory: "leads",
     followupTime: '',
     followupDate: ''
   });
@@ -27,7 +24,7 @@ const FollowUpTab = ({ company_id }) => {
   useEffect(() => {
     setFollowups(followUps);
   }, [followUps]);
-    
+
   const handleInputChange = (e) => {
     const { name, value } = e.target;
     setNewFollowUp((newFollowUp) => ({
@@ -41,6 +38,13 @@ const FollowUpTab = ({ company_id }) => {
     dispatch(addFollowUp({ company_id, data: newFollowUp }));
     setFollowups((prevFollowups) => [...prevFollowups, newFollowUp]);
     setIsFormVisible(false);
+    setNewFollowUp({
+      customerId: company_id,
+      companyId: '',
+      followupDescription: '',
+      followupTime: '',
+      followupDate: ''
+    })
   };
 
   const handleClockButtonClick = () => {
@@ -122,44 +126,6 @@ const FollowUpTab = ({ company_id }) => {
                   </div>
                   <div className="w-1/2">
                     <label className="flex items-center text-sm font-medium text-gray-700 mb-1">
-                      <FaEnvelope className="mr-2 text-lg" />
-                      Follow-Up Method
-                    </label>
-                    <select
-                      name="followupMethod"
-                      className="p-3 border rounded-lg w-full"
-                      value={newFollowUp.followupMethod}
-                      onChange={handleInputChange}
-                    >
-                      <option value="">Select Method</option>
-                      <option value="email">Email</option>
-                      <option value="call">Call</option>
-                      <option value="chat">Chat</option>
-                    </select>
-                  </div>
-                </div>
-                <div className="flex items-center space-x-4">
-                  <div className="w-1/2">
-                    <label className="flex items-center text-sm font-medium text-gray-700 mb-1">
-                      <FaTags className="mr-2 text-lg" />
-                      Follow-Up Category
-                    </label>
-                    <select
-                      name="followupCategory"
-                      className="p-3 border rounded-lg w-full"
-                      value={newFollowUp.followupCategory}
-                      onChange={handleInputChange}
-                    >
-                      <option value="">Select Category</option>
-                      <option value="Lead">Lead</option>
-                      <option value="Sales">Sales</option>
-                      <option value="Carrier">Carrier</option>
-                      <option value="Account">Account</option>
-                      <option value="Support">Support</option>
-                    </select>
-                  </div>
-                  <div className="w-1/2">
-                    <label className="flex items-center text-sm font-medium text-gray-700 mb-1">
                       <FaRegCalendarAlt className="mr-2 text-lg" />
                       Date
                     </label>
@@ -211,9 +177,9 @@ const FollowUpTab = ({ company_id }) => {
 
         <div className="flex items-center space-x-4 mt-6">
           <textarea
-onChange={(e) =>
-  setNewFollowUp((prev) => ({ ...prev, followupDescription: e.target.value }))
-}
+            onChange={(e) =>
+              setNewFollowUp((prev) => ({ ...prev, followupDescription: e.target.value }))
+            }
             placeholder="Type your note..."
             className="flex-grow h-12 p-4 bg-white rounded-lg border-2 border-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-500 resize-none"
           />

@@ -18,7 +18,7 @@ import { BsBuilding } from "react-icons/bs";
 import { IoGlobeOutline } from "react-icons/io5";
 
 const statusOptions = ["Active", "Inactive", "Junk", "Hot", "New"];
-const technicalDetailsOptions = ["Test Passed", "Test Initiated", "Test Fail", "Pending"];
+const technicalDetailsOptions = ["Test Passed", "Test Initiated", "Test Fail", "Pending", "Live", "Commercial"];
 const priorityOptions = ["High", "Medium", "Low"];
 const userTypeOptions = ["Client", "Vendor"];
 

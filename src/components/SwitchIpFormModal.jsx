@@ -23,6 +23,7 @@ const SwitchIpFormModal = ({ company_id, open, closeModal }) => {
   const handleSubmit = (e) => {
     e.preventDefault();
     dispatch(addSwitchIP({ company_id, data: { ip, status } })); // Save IP with Status
+    setIp("")
     closeModal(); // Close modal after adding IP
   };
 

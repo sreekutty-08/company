@@ -84,6 +84,8 @@ const CustomerDetails = () => {
     { label: "Test Passed", value: "Test Passed" },
     { label: "Test Fail", value: "Test Fail" },
     { label: "Test Initiated", value: "Test Initiated" },
+    { label: "Live", value: "Live" },
+    { label: "Commercial", value: "Commercial" },
   ];
   const USERTYPE = [
     { label: "Client", value: "Client" },

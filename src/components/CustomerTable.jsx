@@ -23,9 +23,14 @@ const CustomerTable = ({ customerData }) => {
   };
 
   const handleDelete = async (id) => {
-    await instance.delete(`api/customer/${id}`);
-    window.location.reload();
+    const confirmDelete = window.confirm("Are you sure you want to delete this customer?");
+    
+    if (confirmDelete) {
+      await instance.delete(`api/customer/${id}`);
+      window.location.reload();
+    }
   };
+  
 
   return (
     <div className="p-6">
