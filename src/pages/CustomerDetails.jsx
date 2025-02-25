@@ -8,6 +8,7 @@ import {
   removeSelectedFilters,
   setCustomerModalOff,
   setCustomerModalOn,
+  setSearch,
   setSelectedPriority,
   setSelectedStatus,
   setSelectedTechDetails,
@@ -30,6 +31,7 @@ const CustomerDetails = () => {
     selectedTechDetails,
     customerData,
     customerModal,
+    search
   } = useSelector((state) => state.customers);
 
   const [filteredData, setFilteredData] = useState(customerData);
@@ -41,11 +43,11 @@ const CustomerDetails = () => {
   useEffect(() => {
     const filtered = customerData.filter((customer) => {
       return (
-        (!selectedStatus || customer.status === selectedStatus) &&
+        (!selectedStatus || customer.customerStatus === selectedStatus) &&
         (!selectedPriority || customer.priority === selectedPriority) &&
         (!selectedUserType || customer.user_type === selectedUserType) &&
-        (!selectedTechDetails ||
-          customer.technical_details === selectedTechDetails)
+        (!selectedTechDetails || customer.technical_details === selectedTechDetails) &&
+        (!search || customer.companyName.toLowerCase().includes(search.toLowerCase()))
       );
     });
     setFilteredData(filtered);
@@ -54,14 +56,15 @@ const CustomerDetails = () => {
     selectedPriority,
     selectedUserType,
     selectedTechDetails,
+    search,
     customerData,
   ]);
 
   const onPriorityChange = (val) => dispatch(setSelectedPriority(val));
   const onStatusChange = (val) => dispatch(setSelectedStatus(val));
   const onUserTypeChange = (val) => dispatch(setSelectedUserType(val));
-  const onTechnicalStatusChange = (val) =>
-    dispatch(setSelectedTechDetails(val));
+  const onTechnicalStatusChange = (val) => dispatch(setSelectedTechDetails(val));
+  const onSearch = (val) => dispatch(setSearch(val))
 
   const PRIORITIES = [
     { label: "High", value: "High" },
@@ -189,8 +192,12 @@ const CustomerDetails = () => {
                 Remove Filters
               </Button>
             </Grid2>
+
             <Grid2 item xs={12} sm={6} md={2.5}>
-              <SearchComponent />
+              <SearchComponent 
+              value={search}
+              onChange={onSearch}
+              />
             </Grid2>
 
             {/* Add Customer Button */}

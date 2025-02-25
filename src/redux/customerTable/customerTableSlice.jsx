@@ -9,6 +9,7 @@ const customerTableSlice = createSlice({
     selectedPriority: "",
     selectedUserType: "",
     selectedTechDetails: "",
+    search:"",
     customerModal: false,
   },
   reducers: {
@@ -36,6 +37,11 @@ const customerTableSlice = createSlice({
       state.selectedUserType = "";
       state.selectedTechDetails = "";
     },
+    setSearch: (state, action) => {
+      state.search = action.payload;
+      console.log(action.payload);
+      
+    },
   },
   extraReducers: (builder) => {
     builder.addCase(fetchCustomerDetails.fulfilled, (state, action) => {
@@ -52,5 +58,6 @@ export const {
   setCustomerModalOn,
   setCustomerModalOff,
   removeSelectedFilters,
+  setSearch
 } = customerTableSlice.actions;
 export default customerTableSlice.reducer;

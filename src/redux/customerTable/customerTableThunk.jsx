@@ -57,20 +57,3 @@ export const addCustomer = createAsyncThunk(
         }
     }
 )
-
-
-
-// export const addCustomer = createAsyncThunk(
-//   "customers/addCustomer",
-//   async (data, { rejectWithValue }) => {
-//     console.log(data);
-    
-//     try {
-//       const response = await axiosInstance.post("api/customer", data);
-//       return response.data; // Ensure frontend gets the correct data format
-//     } catch (error) {
-//       console.error("Error adding customer:", error);
-//       return rejectWithValue(error.response?.data || { error: "Something went wrong" });
-//     }
-//   }
-// );

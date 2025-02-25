@@ -2,12 +2,14 @@ import React from "react";
 import { TextField, InputAdornment } from "@mui/material";
 import { Search } from "lucide-react";
 
-const SearchComponent = () => {
+const SearchComponent = ({ value, onChange }) => {
   return (
     <TextField
       variant="outlined"
       placeholder="Search..."
       className="w-full max-w-md"
+      value={value}
+      onChange={(e) => onChange(e.target.value)}
       InputProps={{
         startAdornment: (
           <InputAdornment position="start">
