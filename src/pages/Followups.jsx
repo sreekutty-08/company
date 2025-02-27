@@ -31,7 +31,7 @@ const FollowUp = ({company_id}) => {
         // Step 3: Fetch customer data for each customerId
         const customers = {};
         for (const customerId of validIds) {
-          const response = await instance.get(`api/customer/${customerId}`);
+          const response = await instance.get(`api/customer/${company_id}`);
           customers[customerId] = response.data.customer;
         }
         setCustomerData(customers);
