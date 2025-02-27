@@ -28,7 +28,7 @@ const CustomerTable = ({ customerData }) => {
 
   // Pagination State
   const [page, setPage] = useState(0);
-  const [rowsPerPage, setRowsPerPage] = useState(2); // Change this number as needed
+  const [rowsPerPage, setRowsPerPage] = useState(5); // Change this number as needed
 
   useEffect(() => {
     const filteredData = customerData.filter(customer => customer.userEmail !== "amal@gmail.com");

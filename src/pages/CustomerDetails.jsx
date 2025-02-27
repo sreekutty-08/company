@@ -1,8 +1,9 @@
 import React, { useEffect, useState } from "react";
 import CustomerTable from "../components/CustomerTable";
 import FilterBy from "../components/FilterBy";
-import { Typography, Box, Button, Paper, Grid2 } from "@mui/material";
+import { Typography, Box, Button, Paper, Grid2,Badge } from "@mui/material";
 import { UserCircle, XCircle } from "lucide-react";
+import { Bell } from "lucide-react";
 import { useDispatch, useSelector } from "react-redux";
 import {
   removeSelectedFilters,
@@ -20,9 +21,11 @@ import {
 } from "../redux/customerTable/customerTableThunk";
 import AddCustomerModal from "../components/AddCustomerModal";
 import SearchComponent from "../components/SearchComponent";
+import { useNavigate } from "react-router-dom";
 
 const CustomerDetails = () => {
   const dispatch = useDispatch();
+  const navigate = useNavigate()
   const { reRender } = useSelector((state) => state.view);
   const {
     selectedStatus,
@@ -47,7 +50,7 @@ const CustomerDetails = () => {
         (!selectedPriority || customer.priority === selectedPriority) &&
         (!selectedUserType || customer.user_type === selectedUserType) &&
         (!selectedTechDetails || customer.technical_details === selectedTechDetails) &&
-        (!search || customer.companyName.toLowerCase().includes(search.toLowerCase()))  
+        (!search || customer.companyName.toLowerCase().includes(search.toLowerCase()))
       );
     });
     setFilteredData(filtered);
@@ -116,9 +119,8 @@ const CustomerDetails = () => {
           borderRadius: "0px", // Squared corners
         }}
       >
-        {/* Heading with Icon */}
-        <Box display="flex" alignItems="center" gap={2} mb={3}>
-          <UserCircle size={36} color="#ff6600" /> {/* Orange Icon */}
+        {/* Header Section */}
+        <Box display="flex" justifyContent="space-between" alignItems="center" mb={3}>
           <Typography
             variant="h5"
             sx={{
@@ -129,6 +131,16 @@ const CustomerDetails = () => {
           >
             Customer Details
           </Typography>
+
+          {/* Notification Bell */}
+          <Badge badgeContent="6" color="error">
+            <Bell
+              size={32}
+              color="#ff6600"
+              style={{ cursor: "pointer", transition: "0.3s" }}
+              onClick={() => navigate("/followups")}
+            />
+          </Badge>
         </Box>
 
         {/* Filters & Button in One Row */}
@@ -196,9 +208,9 @@ const CustomerDetails = () => {
             </Grid2>
 
             <Grid2 item xs={12} sm={6} md={2.5}>
-              <SearchComponent 
-              value={search}
-              onChange={onSearch}
+              <SearchComponent
+                value={search}
+                onChange={onSearch}
               />
             </Grid2>
 
