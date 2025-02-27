@@ -30,6 +30,7 @@ const SearchComponent = ({ value, onChange }) => {
           "&.Mui-focused fieldset": {
             borderColor: "#007bff",
           },
+          height:"7vh"
         },
       }}
     />

@@ -137,7 +137,7 @@ const CustomerDetails = () => {
 
           {/* Search Bar */}
           <Box display="flex" width="49%" alignItems="center" justifyContent="space-between">
-          <Box sx={{ width: "400px" }}>
+          <Box sx={{ width: "400px"}}>
             <SearchComponent
               value={search}
               onChange={onSearch}
@@ -164,9 +164,9 @@ const CustomerDetails = () => {
                   fontSize: "16px",
                   textTransform: "none",
                   borderRadius: "8px",
-                  height: "100%",
+                  height: "7vh",
                   "&:hover": {
-                    backgroundColor: "#e55b00",
+                    backgroundColor: "#006700",
                   },
                 }}
               >
@@ -246,15 +246,15 @@ const CustomerDetails = () => {
                   fontWeight: "bold",
                   padding: "12px",
                   fontSize: "16px",
+                  width:"90%",
+                  height:"6vh",
                   textTransform: "none",
                   borderRadius: "8px",
-                  height: "100%",
                   "&:hover": {
                     backgroundColor: "#e55b00",
                   },
                 }}
               >
-                <XCircle className="w-5 h-5" />
                 Remove Filters
               </Button>
             </Grid>
