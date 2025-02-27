@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import CustomerTable from "../components/CustomerTable";
 import FilterBy from "../components/FilterBy";
-import { Typography, Box, Button, Paper, Grid2,Badge } from "@mui/material";
+import { Typography, Box, Button, Paper, Grid2, Badge } from "@mui/material";
 import { UserCircle, XCircle } from "lucide-react";
 import { Bell } from "lucide-react";
 import { useDispatch, useSelector } from "react-redux";
@@ -120,19 +120,21 @@ const CustomerDetails = () => {
         }}
       >
         {/* Header Section */}
-        <Box display="flex" justifyContent="space-between" alignItems="center" mb={3}>
-          <Typography
-            variant="h5"
-            sx={{
-              fontWeight: "bold",
-              color: "#333",
-              fontFamily: "'Poppins', sans-serif",
-            }}
-          >
-            Customer Details
-          </Typography>
+        <Box display="flex" justifyContent="space-between">
+          <Box display="flex" alignItems="center" gap={2} mb={3}>
+            <UserCircle size={36} color="#ff6600" /> {/* Orange Icon */}
+            <Typography
+              variant="h5"
+              sx={{
+                fontWeight: "bold",
+                color: "#333",
+                fontFamily: "'Poppins', sans-serif",
+              }}
+            >
+              Customer Details
+            </Typography>
+          </Box>
 
-          {/* Notification Bell */}
           <Badge badgeContent="6" color="error">
             <Bell
               size={32}
@@ -143,7 +145,6 @@ const CustomerDetails = () => {
           </Badge>
         </Box>
 
-        {/* Filters & Button in One Row */}
         <Box
           sx={{
             display: "flex",
