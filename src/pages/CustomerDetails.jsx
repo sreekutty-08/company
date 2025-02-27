@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import CustomerTable from "../components/CustomerTable";
 import FilterBy from "../components/FilterBy";
-import { Typography, Box, Button, Paper, Grid2, Badge } from "@mui/material";
+import { Typography, Box, Button, Paper, Grid, Badge } from "@mui/material";
 import { UserCircle, XCircle } from "lucide-react";
 import { Bell } from "lucide-react";
 import { useDispatch, useSelector } from "react-redux";
@@ -25,7 +25,7 @@ import { useNavigate } from "react-router-dom";
 
 const CustomerDetails = () => {
   const dispatch = useDispatch();
-  const navigate = useNavigate()
+  const navigate = useNavigate();
   const { reRender } = useSelector((state) => state.view);
   const {
     selectedStatus,
@@ -34,7 +34,7 @@ const CustomerDetails = () => {
     selectedTechDetails,
     customerData,
     customerModal,
-    search
+    search,
   } = useSelector((state) => state.customers);
 
   const [filteredData, setFilteredData] = useState(customerData);
@@ -67,7 +67,7 @@ const CustomerDetails = () => {
   const onStatusChange = (val) => dispatch(setSelectedStatus(val));
   const onUserTypeChange = (val) => dispatch(setSelectedUserType(val));
   const onTechnicalStatusChange = (val) => dispatch(setSelectedTechDetails(val));
-  const onSearch = (val) => dispatch(setSearch(val))
+  const onSearch = (val) => dispatch(setSearch(val));
 
   const PRIORITIES = [
     { label: "High", value: "High" },
@@ -120,8 +120,8 @@ const CustomerDetails = () => {
         }}
       >
         {/* Header Section */}
-        <Box display="flex" justifyContent="space-between">
-          <Box display="flex" alignItems="center" gap={2} mb={3}>
+        <Box display="flex" justifyContent="space-between" alignItems="center" mb={3} width="100%">
+          <Box display="flex" alignItems="center" gap={2}>
             <UserCircle size={36} color="#ff6600" /> {/* Orange Icon */}
             <Typography
               variant="h5"
@@ -135,93 +135,29 @@ const CustomerDetails = () => {
             </Typography>
           </Box>
 
-          <Badge badgeContent="6" color="error">
-            <Bell
-              size={32}
-              color="#ff6600"
-              style={{ cursor: "pointer", transition: "0.3s" }}
-              onClick={() => navigate("/followups")}
+          {/* Search Bar */}
+          <Box display="flex" width="49%" alignItems="center" justifyContent="space-between">
+          <Box sx={{ width: "400px" }}>
+            <SearchComponent
+              value={search}
+              onChange={onSearch}
+              sx={{
+                width: "100%",
+                backgroundColor: "#fff",
+                borderRadius: "8px",
+                boxShadow: "0px 4px 10px rgba(0, 0, 0, 0.08)",
+                "& .MuiOutlinedInput-root": {
+                  borderRadius: "8px",
+                },
+              }}
             />
-          </Badge>
-        </Box>
-
-        <Box
-          sx={{
-            display: "flex",
-            alignItems: "center",
-            gap: 2,
-            padding: "20px",
-            backgroundColor: "#fff",
-            border: "1px solid #ddd",
-            borderRadius: "8px",
-            boxShadow: "0px 4px 10px rgba(0, 0, 0, 0.08)",
-          }}
-        >
-          <Grid2 container spacing={2} alignItems="center" sx={{ flexGrow: 1 }}>
-            <Grid2 item xs={12} sm={6} md={2.5}>
-              <FilterBy
-                options={PRIORITIES}
-                value={selectedPriority}
-                onChange={onPriorityChange}
-                label="Priority"
-                placeholder="Select"
-              />
-            </Grid2>
-            <Grid2 item xs={12} sm={6} md={2.5}>
-              <FilterBy
-                options={STATUS}
-                value={selectedStatus}
-                onChange={onStatusChange}
-                label="Status"
-                placeholder="Select"
-              />
-            </Grid2>
-            <Grid2 item xs={12} sm={6} md={2.5}>
-              <FilterBy
-                options={USERTYPE}
-                value={selectedUserType}
-                onChange={onUserTypeChange}
-                label="User Type"
-                placeholder="Select"
-              />
-            </Grid2>
-            <Grid2 item xs={12} sm={6} md={2.5}>
-              <FilterBy
-                options={TECHDETAILS}
-                value={selectedTechDetails}
-                onChange={onTechnicalStatusChange}
-                label="Tech Status"
-                placeholder="Select"
-              />
-            </Grid2>
-
-            {/* Remove Filter Button */}
-            <Grid2 item xs={12} sm={6} md={2}>
-              <Button
-                onClick={() => dispatch(removeSelectedFilters())}
-                fullWidth
-                variant="contained"
-                className="flex! items-center! justify-center! gap-2! rounded-lg! bg-orange-500! px-4! py-3! text-white! font-semibold! text-base! shadow-md! transition-all! duration-200! hover:bg-orange-600! hover:scale-105! active:scale-95!"
-              >
-                <XCircle className="w-5 h-5" />
-                Remove Filters
-              </Button>
-            </Grid2>
-
-            <Grid2 item xs={12} sm={6} md={2.5}>
-              <SearchComponent
-                value={search}
-                onChange={onSearch}
-              />
-            </Grid2>
-
-            {/* Add Customer Button */}
-            <Grid2 item xs={12} sm={6} md={2}>
+          </Box>
+          <Box item xs={12} sm={6} md={2}>
               <Button
                 fullWidth
                 onClick={() => dispatch(setCustomerModalOn())}
                 sx={{
-                  backgroundColor: "#ff6600",
+                  backgroundColor: "#07b507",
                   color: "#fff",
                   fontWeight: "bold",
                   padding: "12px",
@@ -236,8 +172,93 @@ const CustomerDetails = () => {
               >
                 + Add Customer
               </Button>
-            </Grid2>
-          </Grid2>
+            </Box>
+
+          <Badge badgeContent="6" color="error">
+            <Bell
+              size={36}
+              color="#ff6600"
+              style={{ cursor: "pointer", transition: "0.3s" }}
+              onClick={() => navigate("/followups")}
+            />
+          </Badge>
+        </Box>
+        </Box>
+        <Box
+          sx={{
+            display: "flex",
+            alignItems: "center",
+            gap: 2,
+            padding: "20px",
+            backgroundColor: "#fff",
+            border: "1px solid #ddd",
+            borderRadius: "8px",
+            boxShadow: "0px 4px 10px rgba(0, 0, 0, 0.08)",
+          }}
+        >
+          <Grid container spacing={2} alignItems="center" sx={{ flexGrow: 1 }}>
+            <Grid item xs={12} sm={6} md={2.5}>
+              <FilterBy
+                options={PRIORITIES}
+                value={selectedPriority}
+                onChange={onPriorityChange}
+                label="Priority"
+                placeholder="Select"
+              />
+            </Grid>
+            <Grid item xs={12} sm={6} md={2.5}>
+              <FilterBy
+                options={STATUS}
+                value={selectedStatus}
+                onChange={onStatusChange}
+                label="Status"
+                placeholder="Select"
+              />
+            </Grid>
+            <Grid item xs={12} sm={6} md={2.5}>
+              <FilterBy
+                options={USERTYPE}
+                value={selectedUserType}
+                onChange={onUserTypeChange}
+                label="User Type"
+                placeholder="Select"
+              />
+            </Grid>
+            <Grid item xs={12} sm={6} md={2.5}>
+              <FilterBy
+                options={TECHDETAILS}
+                value={selectedTechDetails}
+                onChange={onTechnicalStatusChange}
+                label="Tech Status"
+                placeholder="Select"
+              />
+            </Grid>
+
+            {/* Remove Filter and Add Customer Buttons */}
+            <Grid item xs={12} sm={6} md={2}>
+              <Button
+                onClick={() => dispatch(removeSelectedFilters())}
+                fullWidth
+                variant="contained"
+                sx={{
+                  backgroundColor: "#ff6600",
+                  color: "#fff",
+                  fontWeight: "bold",
+                  padding: "12px",
+                  fontSize: "16px",
+                  textTransform: "none",
+                  borderRadius: "8px",
+                  height: "100%",
+                  "&:hover": {
+                    backgroundColor: "#e55b00",
+                  },
+                }}
+              >
+                <XCircle className="w-5 h-5" />
+                Remove Filters
+              </Button>
+            </Grid>
+          </Grid>
         </Box>
       </Paper>
 
