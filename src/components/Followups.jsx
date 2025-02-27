@@ -13,13 +13,18 @@ const FollowUpTab = ({ company_id }) => {
     customerId: company_id,
     companyId: '',
     followupDescription: '',
+    followupMethod: "call",
+    followupStatus: "pending",
+    followupCategory: "leads",
     followupTime: '',
     followupDate: ''
   });
+
   const [isFormVisible, setIsFormVisible] = useState(false);
   const followUpRef = useRef(null);
   const dispatch = useDispatch();
   const { followUps } = useSelector((state) => state.view);
+console.log(followUps);
 
   useEffect(() => {
     setFollowups(followUps);
@@ -126,6 +131,45 @@ const FollowUpTab = ({ company_id }) => {
                   </div>
                   <div className="w-1/2">
                     <label className="flex items-center text-sm font-medium text-gray-700 mb-1">
+                      <FaEnvelope className="mr-2 text-lg" />
+                      Follow-Up Method
+                    </label>
+                    <select
+                      name="followupMethod"
+                      className="p-3 border rounded-lg w-full"
+                      value={newFollowUp.followupMethod}
+                      onChange={handleInputChange}
+                    >
+                      <option value="">Select Method</option>
+                      <option value="email">Email</option>
+                      <option value="call">Call</option>
+                      <option value="chat">Chat</option>
+                    </select>
+                  </div>
+                </div>
+
+                <div className="flex items-center space-x-4">
+                  <div className="w-1/2">
+                    <label className="flex items-center text-sm font-medium text-gray-700 mb-1">
+                      <FaTags className="mr-2 text-lg" />
+                      Follow-Up Category
+                    </label>
+                    <select
+                      name="followupCategory"
+                      className="p-3 border rounded-lg w-full"
+                      value={newFollowUp.followupCategory}
+                      onChange={handleInputChange}
+                    >
+                      <option value="">Select Category</option>
+                      <option value="Lead">Lead</option>
+                      <option value="Sales">Sales</option>
+                      <option value="Carrier">Carrier</option>
+                      <option value="Account">Account</option>
+                      <option value="Support">Support</option>
+                    </select>
+                  </div>
+                  <div className="w-1/2">
+                    <label className="flex items-center text-sm font-medium text-gray-700 mb-1">
                       <FaRegCalendarAlt className="mr-2 text-lg" />
                       Date
                     </label>
@@ -138,7 +182,6 @@ const FollowUpTab = ({ company_id }) => {
                     />
                   </div>
                 </div>
-
                 <div className="flex justify-center items-center space-x-4">
                   <div className="w-1/2">
                     <label className="flex items-center text-sm font-medium text-gray-700 mb-1">
@@ -154,7 +197,6 @@ const FollowUpTab = ({ company_id }) => {
                     />
                   </div>
                 </div>
-
                 <div className="flex justify-between mt-6">
                   <button
                     type="submit"

@@ -3,6 +3,7 @@ import { BrowserRouter as Router, Routes, Route, Navigate } from "react-router-d
 import CustomerDetails from "./pages/CustomerDetails";
 import ViewPage from "./pages/ViewPage";
 import SignInPage from "./pages/login";
+import FollowUp from "./pages/Followups";
 
 // ✅ ProtectedRoute Component (Checks Token)
 const ProtectedRoute = ({ element }) => {
@@ -18,6 +19,7 @@ const App = () => {
         <Route path="/login" element={<SignInPage />} />
         <Route path="/" element={<ProtectedRoute element={<CustomerDetails />} />} />
         <Route path="/view/:company_id" element={<ProtectedRoute element={<ViewPage />} />} />
+        <Route path="/followups" element={<ProtectedRoute element={<FollowUp />} />} />
       </Routes>
     </Router>
   );
